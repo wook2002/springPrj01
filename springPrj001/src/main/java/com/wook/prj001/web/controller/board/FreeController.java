@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,21 @@ public class FreeController {
 	private FreeBoardService service;
 	
 	@RequestMapping("list")
-	public List<FreeBoard> list() throws SQLException {
-		return service.getSelect();
+	public List<FreeBoard> getList() throws SQLException {
+		return service.getList();
 	}
+	
+	@RequestMapping("detail/{id}")
+	public List<FreeBoard> getDetail(@PathVariable("id") int id) throws SQLException {
+		return service.getDetail(id);
+	}
+	
+	@RequestMapping("delete/{id}")
+	public List<FreeBoard> deleteList(@PathVariable("id") int id) throws SQLException {
+		return service.deleteList(id);
+	}
+	
+	
 	
 //	@RequestMapping("list")
 //	public List<FreeBoard> list() throws SQLException {

@@ -29,7 +29,7 @@ public class JDBCFreeBoard implements FreeBoardService {
 	}
 
 	@Override
-	public List<FreeBoard> getSelect() throws SQLException {
+	public List<FreeBoard> getList() throws SQLException {
 
 		// 나중에 분리 시킬거
 		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard";
@@ -60,6 +60,47 @@ public class JDBCFreeBoard implements FreeBoardService {
 		return list;
 	}
 
+	
+
+	@Override
+	public List<FreeBoard> getDetail(int id) throws SQLException {
+		
+		
+		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard WHERE NO = "+id;
+		
+		List<FreeBoard> list = new ArrayList<FreeBoard>();
+		Connection con = dataSource.getConnection();
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+
+		while (rs.next()) {
+			
+			FreeBoard fb = new FreeBoard();
+			
+			fb.setNo(rs.getInt("no"));
+			fb.setTitle(rs.getString("title"));
+			fb.setContent(rs.getString("content"));
+			fb.setWriter(rs.getString("writer"));
+			fb.setFreeDate(rs.getDate("regdata"));
+			fb.setRecommend(rs.getInt("recommend"));
+			fb.setLookup(rs.getInt("lookup"));
+			list.add(fb);
+		}
+
+		rs.close();
+		st.close();
+		con.close();
+		
+		return list;
+	}
+	
+	@Override
+	public List<FreeBoard> deleteList(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+//	테스트용
 	@Override
 	public List<FreeBoard> setList(Map messageBody) throws SQLException {
 		System.out.println("열기" + messageBody.get("name"));
@@ -83,4 +124,6 @@ public class JDBCFreeBoard implements FreeBoardService {
 		System.out.println("jdbc테스트1" + result);
 		return list;
 	}
+
+	
 }

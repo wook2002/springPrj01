@@ -8,7 +8,11 @@ import com.wook.prj001.web.entity.FreeBoard;
 
 public interface FreeBoardService {
 	
-	List<FreeBoard> getSelect() throws SQLException;
+	List<FreeBoard> getList() throws SQLException;
 
 	List<FreeBoard> setList(Map messageBody) throws SQLException;
+
+	List<FreeBoard> getDetail(int id) throws SQLException;
+
+	List<FreeBoard> deleteList(int id);
 }
