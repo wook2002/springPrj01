@@ -28,6 +28,31 @@ public class JDBCFreeBoard implements FreeBoardService {
 		this.dataSource = dataSource;
 	}
 
+//	테스트용
+	@Override
+	public List<FreeBoard> setList(Map messageBody) throws SQLException {
+		System.out.println("열기" + messageBody.get("name"));
+
+		String name = String.valueOf(messageBody.get("name"));
+		String comment = String.valueOf(messageBody.get("comment"));
+
+		String sql = "INSERT INTO FREEBOARD(FREENUM, FREENAME, FREECOMMENT,FREEDATE) VALUES(0, ?, ?, SYSDATE)";
+		List<FreeBoard> list = new ArrayList<FreeBoard>();
+		Connection con = dataSource.getConnection();
+
+		PreparedStatement psmt = null;
+		psmt = con.prepareStatement(sql);
+		psmt.setString(1, name);
+		psmt.setString(2, comment);
+		int result = psmt.executeUpdate();
+
+		psmt.close();
+		con.close();
+
+		System.out.println("jdbc테스트1" + result);
+		return list;
+	}
+
 	@Override
 	public List<FreeBoard> getList() throws SQLException {
 
@@ -39,10 +64,9 @@ public class JDBCFreeBoard implements FreeBoardService {
 		ResultSet rs = st.executeQuery(sql);
 
 		while (rs.next()) {
-			
+
 			FreeBoard fb = new FreeBoard();
-			
-			
+
 			fb.setNo(rs.getInt("no"));
 			fb.setTitle(rs.getString("title"));
 			fb.setContent(rs.getString("content"));
@@ -60,23 +84,20 @@ public class JDBCFreeBoard implements FreeBoardService {
 		return list;
 	}
 
-	
-
 	@Override
 	public List<FreeBoard> getDetail(int id) throws SQLException {
-		
-		
-		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard WHERE NO = "+id;
-		
+
+		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard WHERE NO = " + id;
+
 		List<FreeBoard> list = new ArrayList<FreeBoard>();
 		Connection con = dataSource.getConnection();
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
 
 		while (rs.next()) {
-			
+
 			FreeBoard fb = new FreeBoard();
-			
+
 			fb.setNo(rs.getInt("no"));
 			fb.setTitle(rs.getString("title"));
 			fb.setContent(rs.getString("content"));
@@ -90,40 +111,30 @@ public class JDBCFreeBoard implements FreeBoardService {
 		rs.close();
 		st.close();
 		con.close();
-		
+
 		return list;
 	}
-	
+
 	@Override
-	public List<FreeBoard> deleteList(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-//	테스트용
-	@Override
-	public List<FreeBoard> setList(Map messageBody) throws SQLException {
-		System.out.println("열기" + messageBody.get("name"));
+	public int deleteList(int id) throws SQLException {
 		
-		String name = String.valueOf(messageBody.get("name"));
-		String comment = String.valueOf(messageBody.get("comment"));
-		
-		String sql = "INSERT INTO FREEBOARD(FREENUM, FREENAME, FREECOMMENT,FREEDATE) VALUES(0, ?, ?, SYSDATE)";
-		List<FreeBoard> list = new ArrayList<FreeBoard>();
+		System.out.println("도미됨");
+
+		String sql = "DELETE FROM FREEBOARD WHERE no = ?";
 		Connection con = dataSource.getConnection();
-		
-		PreparedStatement psmt = null;
-		psmt = con.prepareStatement(sql);
-		psmt.setString(1, name);
-		psmt.setString(2, comment);
-		 int result = psmt.executeUpdate();
+		PreparedStatement pstmt = null;
 
-		psmt.close();
-		con.close();
+		pstmt = con.prepareStatement(sql);
 		
-		System.out.println("jdbc테스트1" + result);
-		return list;
+		pstmt.setInt(1, id);
+
+		int result = pstmt.executeUpdate();
+		
+		System.out.println("성공");
+
+//		DELETE FROM FREEBOARD WHERE no = ?
+
+		return result;
 	}
 
-	
 }

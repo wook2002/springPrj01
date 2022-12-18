@@ -36,7 +36,7 @@ public class FreeController {
 	}
 	
 	@RequestMapping("delete/{id}")
-	public List<FreeBoard> deleteList(@PathVariable("id") int id) throws SQLException {
+	public int deleteList(@PathVariable("id") int id) throws SQLException {
 		return service.deleteList(id);
 	}
 	
