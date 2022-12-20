@@ -57,7 +57,7 @@ public class JDBCFreeBoard implements FreeBoardService {
 	public List<FreeBoard> getList() throws SQLException {
 
 		// 나중에 분리 시킬거
-		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard";
+		String sql = "SELECT no, title, content, writer, regdata, recommend, lookup FROM FreeBoard ORDER BY no";
 		List<FreeBoard> list = new ArrayList<FreeBoard>();
 		Connection con = dataSource.getConnection();
 		Statement st = con.createStatement();
@@ -117,8 +117,6 @@ public class JDBCFreeBoard implements FreeBoardService {
 
 	@Override
 	public int deleteList(int id) throws SQLException {
-		
-		System.out.println("도미됨");
 
 		String sql = "DELETE FROM FREEBOARD WHERE no = ?";
 		Connection con = dataSource.getConnection();
@@ -129,10 +127,6 @@ public class JDBCFreeBoard implements FreeBoardService {
 		pstmt.setInt(1, id);
 
 		int result = pstmt.executeUpdate();
-		
-		System.out.println("성공");
-
-//		DELETE FROM FREEBOARD WHERE no = ?
 
 		return result;
 	}
