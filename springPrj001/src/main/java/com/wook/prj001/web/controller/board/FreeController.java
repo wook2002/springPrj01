@@ -49,13 +49,13 @@ public class FreeController {
 	public void insertList(@RequestBody HashMap<String, Object> param){
 		
 		System.out.println("param : " + param);
-		System.out.println("µ 123");
+		System.out.println("Îê®123");
 
 	}
 
 //	@RequestMapping("list")
 //	public List<FreeBoard> list() throws SQLException {
-//		System.out.println("controller≈◊Ω∫∆Æselect");
+//		System.out.println("controllerÏñ¥Ï©åÍ≥†∆Æselect");
 //		return service.getSelect();
 //	}
 
@@ -71,7 +71,7 @@ public class FreeController {
 	@PostMapping("setList")
 	public List<FreeBoard> insertList(@RequestBody Map messageBody) throws SQLException, IOException {
 
-		System.out.println("∏÷±Ó : " + messageBody);
+		System.out.println("messageBody : " + messageBody);
 		System.out.println(messageBody.get("name"));
 
 		return service.setList(messageBody);
@@ -82,10 +82,10 @@ public class FreeController {
 		 * reader.readLine()) != null) jb.append(line); } catch (Exception e) { }
 		 * 
 		 * try { JSONObject jsonObject = HTTP.toJSONObject(jb.toString());
-		 * System.out.println(jsonObject); System.out.println("Controller≈◊Ω∫∆Æinsert1 : "
+		 * System.out.println(jsonObject); System.out.println("ControllerÔøΩ◊ΩÔøΩ∆Æinsert1 : "
 		 * + jsonObject.get("Method"));
 		 * 
-		 * Object method = jsonObject.get("Method"); System.out.println("∞¡ method " +
+		 * Object method = jsonObject.get("Method"); System.out.println("ÔøΩÔøΩ method " +
 		 * method); System.out.println(method.getClass().getName());
 		 * System.out.println(method.equals("name"));
 		 * 
