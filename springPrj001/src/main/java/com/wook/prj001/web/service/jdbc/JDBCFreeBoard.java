@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -121,13 +122,35 @@ public class JDBCFreeBoard implements FreeBoardService {
 		String sql = "DELETE FROM FREEBOARD WHERE no = ?";
 		Connection con = dataSource.getConnection();
 		PreparedStatement pstmt = null;
-
 		pstmt = con.prepareStatement(sql);
 		
 		pstmt.setInt(1, id);
 
 		int result = pstmt.executeUpdate();
 
+		return result;
+	}
+
+	@Override
+	public int insertList(HashMap<String, String> param) throws SQLException {
+		
+		//INSERT INTO FREEBOARD(NO,TITLE,CONTENT,WRITER,regdata) VALUES(FREEEMP_SEQ.NEXTVAL,'NAME3', 'COMMET3','writer3', sysdate)
+//		writer, title,content
+		String title = param.get("title");
+		String content = param.get("content");
+		String writer = param.get("writer");
+	
+		 
+		String sql = "INSERT INTO FREEBOARD(NO,TITLE,CONTENT,WRITER,regdata) VALUES(FREEEMP_SEQ.NEXTVAL,? ,? ,? , sysdate)";
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setString(1, title);
+		pstmt.setString(2, content);
+		pstmt.setString(3, writer);
+
+		int result = pstmt.executeUpdate();
 		return result;
 	}
 

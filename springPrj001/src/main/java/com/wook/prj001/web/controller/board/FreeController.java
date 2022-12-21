@@ -38,19 +38,19 @@ public class FreeController {
 
 	@RequestMapping("delete/{id}")
 	public int deleteList(@PathVariable("id") int id) throws SQLException {
-
 		return service.deleteList(id);
-
+	}
+	
+	@RequestMapping("update/{id}")
+	public List<FreeBoard> updateList(@PathVariable("id") int id) throws SQLException {
+		return service.getDetail(id);
 	}
 
 //	, produces = "application/json"
 
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
-	public void insertList(@RequestBody HashMap<String, Object> param){
-		
-		System.out.println("param : " + param);
-		System.out.println("됨123");
-
+	public int insertList(@RequestBody HashMap<String, String> param) throws SQLException{
+		return service.insertList(param);
 	}
 
 //	@RequestMapping("list")
