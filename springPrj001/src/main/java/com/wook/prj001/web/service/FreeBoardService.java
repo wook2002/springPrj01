@@ -20,4 +20,6 @@ public interface FreeBoardService {
 
 	int insertList(HashMap<String, String> param) throws SQLException;
 
+	int updateSet(HashMap<String, String> param) throws SQLException;
+
 }

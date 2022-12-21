@@ -154,4 +154,32 @@ public class JDBCFreeBoard implements FreeBoardService {
 		return result;
 	}
 
+	@Override
+	public int updateSet(HashMap<String, String> param) throws SQLException {
+		
+//		UPDATE FREEBOARD SET TITLE = '삼성전자',CONTENT = '머', WRITER = '머2' WHERE NO = 22
+		System.out.println(param);
+		System.out.println(param.get("title"));
+		
+		String title = param.get("title");
+		String content = param.get("content");
+		int no = Integer.parseInt( param.get("no") );
+		 
+		
+		String sql = "UPDATE FREEBOARD SET TITLE = ?, CONTENT = ?  WHERE NO = ?";
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		pstmt = con.prepareStatement(sql);
+		
+		pstmt.setString(1, title);
+		pstmt.setString(2, content);
+		pstmt.setInt(3, no);
+	
+
+		int result = pstmt.executeUpdate();
+		System.out.println(result);
+		return result;
+		
+	}
+
 }

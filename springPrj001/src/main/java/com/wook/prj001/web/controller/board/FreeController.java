@@ -41,10 +41,19 @@ public class FreeController {
 		return service.deleteList(id);
 	}
 	
-	@RequestMapping("update/{id}")
+	@RequestMapping("updateGet/{id}")
 	public List<FreeBoard> updateList(@PathVariable("id") int id) throws SQLException {
 		return service.getDetail(id);
 	}
+	
+	
+	@RequestMapping(value = "updateSet", method = RequestMethod.POST)
+	public int updateSet(@RequestBody HashMap<String, String> param) throws SQLException{
+		
+		System.out.println("추구ㅏ추" + param);
+		return service.updateSet(param);
+	}
+	
 
 //	, produces = "application/json"
 
