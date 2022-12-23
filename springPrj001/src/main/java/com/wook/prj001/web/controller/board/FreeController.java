@@ -28,6 +28,7 @@ public class FreeController {
 
 	@RequestMapping("list")
 	public List<FreeBoard> getList() throws SQLException {
+		
 		return service.getList();
 	}
 
@@ -49,8 +50,6 @@ public class FreeController {
 	
 	@RequestMapping(value = "updateSet", method = RequestMethod.POST)
 	public int updateSet(@RequestBody HashMap<String, String> param) throws SQLException{
-		
-		System.out.println("추구ㅏ추" + param);
 		return service.updateSet(param);
 	}
 	
