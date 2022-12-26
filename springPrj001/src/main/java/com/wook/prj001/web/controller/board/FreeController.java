@@ -28,7 +28,7 @@ public class FreeController {
 
 	@RequestMapping("list")
 	public List<FreeBoard> getList() throws SQLException {
-		
+		System.out.println("됨?");
 		return service.getList();
 	}
 

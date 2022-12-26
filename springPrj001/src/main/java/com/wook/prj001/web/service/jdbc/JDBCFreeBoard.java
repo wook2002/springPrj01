@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import com.wook.prj001.web.entity.FreeBoard;
 import com.wook.prj001.web.service.FreeBoardService;
 
+// 먼가 이상하다 했더니 폴더구조 service랑 repository 합쳐놨음 멍청
+//  ==> 기본적인것만 만들고 수정해야됨
+// 클래스형 => 도메인형으로도 수정해야됨.
 @Service
 public class JDBCFreeBoard implements FreeBoardService {
 

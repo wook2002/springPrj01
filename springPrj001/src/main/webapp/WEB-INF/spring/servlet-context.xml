@@ -10,8 +10,10 @@
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- <context:annotation-config/> -->
-	<context:component-scan base-package="com.wook.prj001.web.controller"/>
+	<!-- <context:annotation-config/>
+	<context:component-scan base-package="com.wook.prj001.web.controller"/> --> 
+	<!-- 위에꺼 아래로 옮길거임.(트리형식->도메인형식) -->
+	<context:component-scan base-package="com.wook.prj01.web"/>
 
 <!-- viewResolver -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
