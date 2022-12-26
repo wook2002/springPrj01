@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+SELECT post_no, post_title, post_content, reg_date, recommend, lookup
+    ,category_name, user_id
+FROM board_post A
+JOIN Board_Category B ON A.category_no = B.category_no
+JOIN member_user C ON A.user_no = C.user_no; -->
