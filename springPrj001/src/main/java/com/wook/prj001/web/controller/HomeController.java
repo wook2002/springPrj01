@@ -3,7 +3,7 @@ package com.wook.prj001.web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Controller("homController1")
 @RequestMapping("/1")
 public class HomeController {
 	
