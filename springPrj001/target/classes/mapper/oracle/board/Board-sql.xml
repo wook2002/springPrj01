@@ -21,4 +21,16 @@
   	SELECT post_no, post_title, post_content, reg_date, recommend, lookup,category_name, user_id FROM board_post A JOIN Board_Category B ON A.category_no = B.category_no JOIN member_user C ON A.user_no = C.user_no
   </select>
   
+  <select id="countList" resultType="int">
+  	SELECT COUNT(*) FROM v_board_post
+  </select>
+  
+  <select id="selectListPage" parameterType="hashmap" resultMap="boardResultMap">
+  	SELECT post_no,post_title, post_content, reg_date, recommend, lookup
+        ,category_name, user_id
+	FROM v_board_post
+	WHERE post_no BETWEEN #{beginList} AND #{endList}
+	ORDER BY post_no
+  </select>
+  
 </mapper>

@@ -1,6 +1,8 @@
 package com.wook.prj01.web.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,22 +39,41 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> getListPage(int currentBar, int sizeList, String sortBy, String sort) {
 
+		
+		int countList = 35;
+		int sizeBar = 5;
 		currentBar = 1;
-		int sizeBar = 3;
-		int maxiumList = 11;
+		sizeList = 10;
+		sortBy = "post_no";
+		sort = "DESC";
 		
-		System.out.println("currentBar : " + currentBar);
-		System.out.println("sizeList : " + sizeList);
+		//
+		int listcount = session.selectOne("boardMapper.countList");
+		System.out.println("listcount : " + listcount);
 		
-		System.out.println("sortBy : " + sortBy);
-		System.out.println("sort : " + sort);
+		//
+		Page page = new Page(currentBar, countList, sizeList, sizeBar);
+
+		//
+		int beginList = page.getBeginList();
+		int endList = page.getEndList();
+		sortBy = page.getSortBy();
+		sort = page.getSort();
 		
-//		currentBar, sizeBar, maxiumList
-		Page page = new Page();
+		Map<String,Object>map = new HashMap<String,Object>();
+		map.put("beginList", beginList);
+		map.put("endList", endList);
+		map.put("sortBy", sortBy);
+		map.put("sort", sort);
+		System.out.println("map" + map);
+		
+		List<Board> list = null;
+		list = session.selectList("boardMapper.selectListPage", map);
 		
 		System.out.println(page.toString());
+		System.out.println("list : " + list);
 		
-		return null;
+		return list;
 	}
 
 }
