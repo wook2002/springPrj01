@@ -13,7 +13,9 @@
 
 
 <context:component-scan base-package="com.wook.prj001.web.service"/>
+
 <context:component-scan base-package="com.wook.prj01.web.board.service"/>
+
 
 <!--     -->
 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -22,5 +24,19 @@
     	<property name="username" value="ejwook"/>
     	<property name="password" value="ejwook"/>
 </bean>
+
+
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"/>
+	<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+	<property name="mapperLocations" value="classpath*:/mapper/oracle/board/board-sql.xml"></property>
+	<!-- statement 선언의 오류를 좀 더 빠르게 파악하기 위해서 true로 설정 -->
+    <property name="failFast" value="true"/>
+</bean>
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg index="0" ref="sqlSessionFactory" />
+</bean>
+
  
 </beans>

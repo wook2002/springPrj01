@@ -17,7 +17,6 @@
 	<param-value>
 		/WEB-INF/spring/security-context.xml
 		/WEB-INF/spring/service-context.xml
-		/WEB-INF/spring/mabatis-config.xml
 	</param-value>
 </context-param>
   

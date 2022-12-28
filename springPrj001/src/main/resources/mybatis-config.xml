@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+<!--  
+	<properties resource="com/atoz_develop/spms/dao/db.properties">
+		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+    	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+    	<property name="username" value="ejwook"/>
+    	<property name="password" value="ejwook"/>
+	</properties>
+-->
+
+	<!--mapper에서 매칭할 parmeter Type 별칭 설정-->
+	<typeAliases>
+		<typeAlias alias="board" type="com.wook.prj01.web.board.dto.Board"/>
+	</typeAliases>
+	
+<!--  environment id를 구분하여 연결할 DB를 여려개 구성할 수 도 있음 
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+				<dataSource type="POOLED">
+					<property name="driver" value="${driver}"/>
+					<property name="url" value="${url}"/>
+					<property name="username" value="${username}"/>
+					<property name="password" value="${password}"/>
+				</dataSource>
+		</environment>
+	</environments>
+-->
+	
+	<mappers>
+		<mapper resource="/mapper/oracle/board/Board-sql.xml"/> 
+	</mappers>
+	
+	
+	
+</configuration>
+<!-- 
+SELECT post_no, post_title, post_content, reg_date, recommend, lookup
+    ,category_name, user_id
+FROM board_post A
+JOIN Board_Category B ON A.category_no = B.category_no
+JOIN member_user C ON A.user_no = C.user_no; -->

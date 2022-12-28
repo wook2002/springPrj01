@@ -16,7 +16,7 @@ import com.wook.prj01.web.board.service.BoardService;
 @RestController("boardController")
 @RequestMapping("/post/")
 public class BoardController {
-
+	
 	@Autowired
 	private BoardService service;
 	
