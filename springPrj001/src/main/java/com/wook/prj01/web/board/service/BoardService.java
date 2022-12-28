@@ -8,4 +8,6 @@ public interface BoardService {
 
 	List<Board> getList(int id);
 
+	List<Board> getListPage(int currentBar, int sizeList, String sortBy, String sort);
+
 }

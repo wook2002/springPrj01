@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wook.prj01.web.board.dto.Board;
+import com.wook.prj01.web.board.dto.Page;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -26,12 +27,32 @@ public class BoardServiceImpl implements BoardService {
 		
 //		list = session.selectList("boardDB.selectList");
 		
-		list = session.selectList("boardDB.testSelect");
+		list = session.selectList("boardMapper.selectList");
 		
-		
-		System.out.println("왜왜왜" + list);
+		System.out.println("왜왜왜 : " + list);
 		
 		return list ;
+	}
+
+	@Override
+	public List<Board> getListPage(int currentBar, int sizeList, String sortBy, String sort) {
+
+		currentBar = 1;
+		int sizeBar = 3;
+		int maxiumList = 11;
+		
+		System.out.println("currentBar : " + currentBar);
+		System.out.println("sizeList : " + sizeList);
+		
+		System.out.println("sortBy : " + sortBy);
+		System.out.println("sort : " + sort);
+		
+//		currentBar, sizeBar, maxiumList
+		Page page = new Page();
+		
+		System.out.println(page.toString());
+		
+		return null;
 	}
 
 }
