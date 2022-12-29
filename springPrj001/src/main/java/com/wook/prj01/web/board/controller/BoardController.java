@@ -1,13 +1,15 @@
 package com.wook.prj01.web.board.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wook.prj01.web.board.dto.Board;
@@ -21,29 +23,30 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	@RequestMapping("readList/{id}")
-	public List<Board> getList(@PathVariable("id") int id) throws SQLException {
-		System.out.println(id);
-		System.out.println("readList : Controller");
-		return service.getList(id);
+	//../{id} ~ @PathVariable("id") int id
+	@RequestMapping("readListAll")
+	public List<Board> getListAll(){return service.getListAll();}
+	
+
+//	@RequestParam(value="currentBar", defaultValue="1") int currentBar,
+//	@RequestParam(value="sortBy", defaultValue="no") String sortBy,
+//	@RequestParam(value="sort", defaultValue="desc") String sort
+	// post/readListPage??page=0 & size=2 & sort=no,desc
+	@RequestMapping("readListPage/{id}")
+	public List<Board> getListPage(
+			@PathVariable("id") int id,
+			@RequestBody Map<String, Object> map
+			) throws SQLException {
+		int category_no = id;
+		map.put("category_no", category_no);
+		return service.getListPage(map);
 	}
 	
 	
-	// pageable, page, size, sortBy, desc
-	// post/readListPage??page=0&size=2&sort=no,desc
-	// post/readListPage??page=0 & size=2 & sort=no,desc
-	@RequestMapping("readListPage")
-	public List<Board> getListPage(
-			@RequestParam(value="currentBar", defaultValue="1") int currentBar,
-			@RequestParam(value="sortBy", defaultValue="no") String sortBy,
-			@RequestParam(value="sort", defaultValue="desc") String sort
-			) throws SQLException {
-		
-		int sizeList = 10;
-		
-		
-
-		return service.getListPage(currentBar, sizeList, sortBy, sort );
-//		return null;
+	@RequestMapping("detail")
+	public List<Board> getDetail() throws SQLException {
+		int category_no = 1;
+		int post_no = 1;
+		return service.getDetail(category_no, post_no);
 	}
 }

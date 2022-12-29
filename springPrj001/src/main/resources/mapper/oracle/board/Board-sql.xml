@@ -27,10 +27,19 @@
   
   <select id="selectListPage" parameterType="hashmap" resultMap="boardResultMap">
   	SELECT post_no,post_title, post_content, reg_date, recommend, lookup
-        ,category_name, user_id
+        ,category_name, user_id, category_no
 	FROM v_board_post
-	WHERE post_no BETWEEN #{beginList} AND #{endList}
+	WHERE category_no = #{category_no}
+	AND post_no BETWEEN #{beginList} AND #{endList}
 	ORDER BY post_no
+  </select>
+  
+  <select id="selectDetail" parameterType="hashmap" resultMap="boardResultMap">
+  	SELECT post_no, post_title, post_content, reg_date, recommend, lookup
+        ,category_name, user_id, category_no
+	FROM v_board_post
+	WHERE category_no = #{category_no}
+	AND post_no = #{post_no}
   </select>
   
 </mapper>

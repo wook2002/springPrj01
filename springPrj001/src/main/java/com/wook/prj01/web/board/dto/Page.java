@@ -1,5 +1,8 @@
 package com.wook.prj01.web.board.dto;
 
+import lombok.Data;
+
+@Data
 public class Page {
 	
 	
@@ -23,6 +26,9 @@ public class Page {
 	
 	private int endBar; // 5, 10, 15, 20
 	
+	public Page() {
+		// TODO Auto-generated constructor stub
+	}
 
 //	int currentBar, int sizeBar, int countList
 	public Page(int currentBar, int countList, int sizeList, int sizeBar){
@@ -42,21 +48,6 @@ public class Page {
 			this.endBar = maxiumBar;
 		}
 	}
-
-	
-	public String getSortBy() {
-		return sortBy;
-	}
-	public String getSort() {
-		return sort;
-	}
-	public int getBeginList() {
-		return beginList;
-	}
-	public int getEndList() {
-		return endList;
-	}
-	
 	
 	@Override
 	public String toString() {

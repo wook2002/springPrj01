@@ -22,57 +22,38 @@ public class BoardServiceImpl implements BoardService {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public List<Board> getList(int id) {	
-		
-		List<Board> list = null;
-		System.out.println("야야야");
-		
-//		list = session.selectList("boardDB.selectList");
-		
-		list = session.selectList("boardMapper.selectList");
-		
-		System.out.println("왜왜왜 : " + list);
-		
+	public List<Board> getListAll() {	
+		List<Board> list = session.selectList("boardMapper.selectList");
 		return list ;
 	}
 
 	@Override
-	public List<Board> getListPage(int currentBar, int sizeList, String sortBy, String sort) {
+	public List<Board> getListPage(Map<String,Object> map) {
+		// Page에 넣을 값
+		int countList = session.selectOne("boardMapper.countList");
+		int currentBar = Integer.parseInt(map.get("currentBar").toString());
+		int sizeList = Integer.parseInt(map.get("sizeList").toString());
+		int sizeBar = Integer.parseInt(map.get("sizeBar").toString());
+		Page page =  new Page(currentBar, countList, sizeList, sizeBar);
 
-		
-		int countList = 35;
-		int sizeBar = 5;
-		currentBar = 1;
-		sizeList = 10;
-		sortBy = "post_no";
-		sort = "DESC";
-		
-		//
-		int listcount = session.selectOne("boardMapper.countList");
-		System.out.println("listcount : " + listcount);
-		
-		//
-		Page page = new Page(currentBar, countList, sizeList, sizeBar);
-
-		//
+		// Page 결과 값을 -> map에
 		int beginList = page.getBeginList();
 		int endList = page.getEndList();
-		sortBy = page.getSortBy();
-		sort = page.getSort();
-		
-		Map<String,Object>map = new HashMap<String,Object>();
 		map.put("beginList", beginList);
 		map.put("endList", endList);
-		map.put("sortBy", sortBy);
-		map.put("sort", sort);
-		System.out.println("map" + map);
 		
+		// map을 -> mapper에
 		List<Board> list = null;
 		list = session.selectList("boardMapper.selectListPage", map);
-		
-		System.out.println(page.toString());
-		System.out.println("list : " + list);
-		
+		return list;
+	}
+
+	@Override
+	public List<Board> getDetail(int category_no, int post_no) {
+		Map<String,Object>map = new HashMap<String,Object>();
+		map.put("category_no", category_no);
+		map.put("post_no", post_no);
+		List<Board> list = session.selectList("boardMapper.selectDetail", map);
 		return list;
 	}
 
