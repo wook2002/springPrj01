@@ -21,30 +21,50 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private SqlSessionTemplate session;
 	
+	// 테스트용
 	@Override
 	public List<Board> getListAll() {	
 		List<Board> list = session.selectList("boardMapper.selectList");
 		return list ;
 	}
-
+	
 	@Override
-	public List<Board> getListPage(Map<String,Object> map) {
+	public int getListcount(int id) {
+		int countList = session.selectOne("boardMapper.countList", id);
+		return countList;
+	}
+	
+	@Override
+	public Map<String, Object> getPageItem(Map<String,Object> map) {
 		// Page에 넣을 값
-		int countList = session.selectOne("boardMapper.countList");
 		int currentBar = Integer.parseInt(map.get("currentBar").toString());
 		int sizeList = Integer.parseInt(map.get("sizeList").toString());
 		int sizeBar = Integer.parseInt(map.get("sizeBar").toString());
+		int countList = Integer.parseInt(map.get("countList").toString());
 		Page page =  new Page(currentBar, countList, sizeList, sizeBar);
 
-		// Page 결과 값을 -> map에
+		// Page결과 -> map
 		int beginList = page.getBeginList();
 		int endList = page.getEndList();
+		int maxiumBar = page.getMaxiumBar();
 		map.put("beginList", beginList);
 		map.put("endList", endList);
+		map.put("maxiumBar", maxiumBar);
 		
-		// map을 -> mapper에
-		List<Board> list = null;
-		list = session.selectList("boardMapper.selectListPage", map);
+		
+		System.out.println("map2 : "+ map);
+
+		return map;
+	}
+
+	@Override
+	public List<Board> getListPage(Map<String,Object> map) {
+		
+		System.out.println("map3 : "+ map);
+		// paging
+		List<Board> list = session.selectList("boardMapper.selectListPage", map);
+		
+		System.out.println("list : " + list);
 		return list;
 	}
 
@@ -56,5 +76,7 @@ public class BoardServiceImpl implements BoardService {
 		List<Board> list = session.selectList("boardMapper.selectDetail", map);
 		return list;
 	}
+
+	
 
 }

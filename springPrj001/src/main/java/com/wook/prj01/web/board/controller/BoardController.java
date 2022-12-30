@@ -1,7 +1,6 @@
 package com.wook.prj01.web.board.controller;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +22,27 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	//../{id} ~ @PathVariable("id") int id
 	@RequestMapping("readListAll")
 	public List<Board> getListAll(){return service.getListAll();}
 	
+	@RequestMapping("getListcount/{id}")
+	public int getListcount(@PathVariable("id") int id){return service.getListcount(id);}
+	
+	@RequestMapping("getPageItem/{id}")
+	public Map<String, Object> getPageItem(
+			@PathVariable("id") int id,
+			@RequestBody Map<String, Object> map){
+		System.out.println("getPageItemCon : " + map);
+		int countList = service.getListcount(id);
+		map.put("countList", countList);
+		return service.getPageItem(map);
+	}
 
 //	@RequestParam(value="currentBar", defaultValue="1") int currentBar,
 //	@RequestParam(value="sortBy", defaultValue="no") String sortBy,
 //	@RequestParam(value="sort", defaultValue="desc") String sort
 	// post/readListPage??page=0 & size=2 & sort=no,desc
+
 	@RequestMapping("readListPage/{id}")
 	public List<Board> getListPage(
 			@PathVariable("id") int id,
@@ -39,6 +50,12 @@ public class BoardController {
 			) throws SQLException {
 		int category_no = id;
 		map.put("category_no", category_no);
+		
+		int countList = service.getListcount(id);
+		map.put("countList", countList);
+		
+		map = service.getPageItem(map);
+
 		return service.getListPage(map);
 	}
 	
@@ -47,6 +64,8 @@ public class BoardController {
 	public List<Board> getDetail() throws SQLException {
 		int category_no = 1;
 		int post_no = 1;
+		
+		 
 		return service.getDetail(category_no, post_no);
 	}
 }
