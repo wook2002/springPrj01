@@ -8,6 +8,7 @@
 
 	<resultMap id="boardResultMap" type="board" >
 		<id column="post_no" property="no"/>
+		<result column="RN" property="RN"/>
 		<result column="post_title" property="title"/>
 		<result column="post_content" property="content"/>
 		<result column="reg_date" property="regDate"/>

@@ -47,9 +47,15 @@ public class BoardServiceImpl implements BoardService {
 		int beginList = page.getBeginList();
 		int endList = page.getEndList();
 		int maxiumBar = page.getMaxiumBar();
+		int beginBar = page.getBeginBar();
+		int endBar = page.getEndBar();
+		
 		map.put("beginList", beginList);
 		map.put("endList", endList);
 		map.put("maxiumBar", maxiumBar);
+		map.put("beginBar", beginBar);
+		map.put("endBar", endBar);
+		
 		
 		
 		System.out.println("map2 : "+ map);

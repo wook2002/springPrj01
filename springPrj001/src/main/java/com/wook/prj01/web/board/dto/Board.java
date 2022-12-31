@@ -14,7 +14,5 @@ public class Board {
 	private int lookup;
 	private String category;
 	private String userId;
-	
-	
-	
+	private int RN;
 }
