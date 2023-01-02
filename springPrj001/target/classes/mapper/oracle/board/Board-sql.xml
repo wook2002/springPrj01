@@ -16,6 +16,7 @@
 		<result column="lookup" property="lookup"/>
 		<result column="category_name" property="category"/>
 		<result column="user_id" property="userId"/>
+		<result column="category_no" property="categoryNo"/>
 	</resultMap>
 
   <select id="selectList" resultMap="boardResultMap">

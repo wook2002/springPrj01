@@ -15,4 +15,5 @@ public class Board {
 	private String category;
 	private String userId;
 	private int RN;
+	private int categoryNo;
 }
