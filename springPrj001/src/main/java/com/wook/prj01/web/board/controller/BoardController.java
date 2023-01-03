@@ -1,17 +1,16 @@
 package com.wook.prj01.web.board.controller;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,52 +45,44 @@ public class BoardController {
 
 	@RequestMapping("readListPage/{id}")
 	public Map<String, Object> getListPage(
-			@PathVariable("id") int id
+			@PathVariable("id") int category_no
 			, @RequestBody Map<String, Object> map
 			) throws SQLException, JsonProcessingException, IllegalArgumentException {
+		int countList;
+		List<Board> list;
 		
-		//tempData
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		String currentBar = "1";
-//		String sizeList = "10";
-//		String sizeBar = "5";
-//		String sortBy = "post_no";
-//		String sort = "DESC";
-//		map.put("currentBar", currentBar);
-//		map.put("sizeList", sizeList);
-//		map.put("sizeBar", sizeBar);
-//		map.put("sortBy", sortBy);
-//		map.put("sort", sort);
-//		{"sizeList":"10","sortBy":"post_no","category_no":1,"sort":"DESC","currentBar":"1","sizeBar":"5"}  
-		
-		int category_no = id;
+		// category_no, countList
 		map.put("category_no", category_no);
-		
-		int countList = service.getListcount(category_no);
+		countList= service.getListcount(category_no);
 		map.put("countList", countList);
 		
-		
+		//paging이 serviceImpl에서도 있음(잘되긴하는데 수정필요)
+		// getPageItem, getList
 		map = service.getPageItem(map);
-		List<Board> list = service.getListPage(map);
+		list = service.getListPage(map);
 		map.put("list", list);
-
 		return map;
 	}
 
-//	@RequestParam(value="currentBar", defaultValue="1") int currentBar,
-//	@RequestParam(value="sortBy", defaultValue="no") String sortBy,
-//	@RequestParam(value="sort", defaultValue="desc") String sort
-	// post/readListPage??page=0 & size=2 & sort=no,desc
-	
 	@RequestMapping("detail/{id}")
-	public List<Board> getDetail(
-			@PathVariable("id") int id,
-			@RequestParam(value="no", defaultValue="1") int no) throws SQLException {
-		System.out.println("id : " + id);
-		System.out.println("no : " + no);
-		int category_no = 1;
-		int post_no = 1;
-		return service.getDetail(category_no, post_no);
+	public List<Board>  getDetail(
+			@PathVariable("id") int categoryNo,
+			@RequestParam(name="bno", defaultValue="1") String bno) throws SQLException {
+		Map<String, Object> map = new HashMap<>();
+		map.put("category_no", categoryNo);
+		map.put("post_no", bno);
+		return service.getDetail(map);
+	}
+	
+	@RequestMapping(value = "createBoard/{id}", method = RequestMethod.POST)
+	public int createBoard(
+			@PathVariable("id") String categoryNo,
+			@RequestBody HashMap<String, String> map) throws SQLException {
+		map.put("category_no", categoryNo);
+		System.out.println(map);
+		
+		
+		return service.createBoard(map);
 	}
 	
 	

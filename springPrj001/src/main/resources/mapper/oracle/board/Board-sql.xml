@@ -47,4 +47,9 @@
 	AND post_no = #{post_no}
   </select>
   
+  <insert id="insertList" parameterType="hashmap">
+  	INSERT INTO board_post(post_no, user_no, category_no, post_title, post_content)
+	VALUES(BOARD_POST_SEQ.NEXTVAL, #{writer}, #{category_no}, #{title}, #{content})
+  </insert>
+  
 </mapper>

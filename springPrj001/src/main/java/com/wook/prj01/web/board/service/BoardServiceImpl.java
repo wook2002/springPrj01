@@ -1,5 +1,7 @@
 package com.wook.prj01.web.board.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,12 +69,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Board> getDetail(int category_no, int post_no) {
-		Map<String,Object>map = new HashMap<String,Object>();
-		map.put("category_no", category_no);
-		map.put("post_no", post_no);
+	public List<Board> getDetail(Map<String, Object> map) {
 		List<Board> list = session.selectList("boardMapper.selectDetail", map);
 		return list;
+	}
+
+	@Override
+	public int createBoard(HashMap<String, String> map) {
+		int result = session.insert("boardMapper.insertList", map);
+		return result;
 	}
 
 	
