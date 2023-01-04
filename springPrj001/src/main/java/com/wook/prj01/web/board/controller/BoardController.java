@@ -56,7 +56,6 @@ public class BoardController {
 		countList= service.getListcount(category_no);
 		map.put("countList", countList);
 		
-		//paging이 serviceImpl에서도 있음(잘되긴하는데 수정필요)
 		// getPageItem, getList
 		map = service.getPageItem(map);
 		list = service.getListPage(map);
@@ -79,11 +78,26 @@ public class BoardController {
 			@PathVariable("id") String categoryNo,
 			@RequestBody HashMap<String, String> map) throws SQLException {
 		map.put("category_no", categoryNo);
-		System.out.println(map);
-		
-		
 		return service.createBoard(map);
 	}
 	
+	@RequestMapping("deleteBoard/{id}")
+	public int deleteBoard(
+			@PathVariable("id") int categoryNo,
+			@RequestParam(name="bno", defaultValue="1") int bno){
+		Map<String, Object> map = new HashMap<>();
+		map.put("category_no", categoryNo);
+		map.put("post_no", bno);
+		return service.deleteBoard(map);
+	}
+	
+//	updateGet => getDetail
+	@RequestMapping(value = "updateSet", method = RequestMethod.POST)
+	public int updateSet(
+			@RequestBody HashMap<String, String> map,
+			@RequestParam(name="bno", defaultValue="100") String bno) throws SQLException{
+		map.put("post_no", bno);
+		return service.updateSet(map);
+	}
 	
 }

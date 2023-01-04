@@ -1,7 +1,5 @@
 package com.wook.prj01.web.board.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +38,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Map<String, Object> getPageItem(Map<String,Object> map) {
 //		{"sizeList":"10","sortBy":"post_no","category_no":1,"sort":"DESC","currentBar":"1","sizeBar":"5"}
-		// Page에 넣을 값
 		int currentBar = Integer.parseInt(map.get("currentBar").toString());
 		int sizeList = Integer.parseInt(map.get("sizeList").toString());
 		int sizeBar = Integer.parseInt(map.get("sizeBar").toString());
 		int countList = Integer.parseInt(map.get("countList").toString());
+		
+		// 페이징
 		Page page =  new Page(currentBar, countList, sizeList, sizeBar);
 
 		// Page결과 -> map
@@ -58,7 +57,6 @@ public class BoardServiceImpl implements BoardService {
 		map.put("maxiumBar", maxiumBar);
 		map.put("beginBar", beginBar);
 		map.put("endBar", endBar);
-		
 		return map;
 	}
 
@@ -80,6 +78,15 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
-	
+	@Override
+	public int deleteBoard(Map<String, Object> map) {
+		int result = session.insert("boardMapper.deleteBoard", map);
+		return result;
+	}
 
+	@Override
+	public int updateSet(HashMap<String, String> map) {
+		int result = session.insert("boardMapper.updateSet", map);
+		return result;
+	}
 }

@@ -29,14 +29,16 @@
   
   <select id="selectListPage" parameterType="hashmap" resultMap="boardResultMap">
   	SELECT *
-	FROM(
-	    SELECT ROWNUM AS "RN", post_no,post_title, post_content, reg_date, recommend, lookup
-	            ,category_name, user_id, category_no
-	    FROM v_board_post
-	    WHERE category_no = #{category_no}
-	    ORDER BY post_no
-	)
-	WHERE RN BETWEEN #{beginList} AND #{endList}
+  	FROM(
+	  	SELECT ROWNUM AS "RN", post_no,post_title, post_content, reg_date, recommend, lookup
+		            ,category_name, user_id, category_no
+		FROM(
+		    SELECT *
+		    FROM v_board_post
+		    WHERE category_no = #{category_no}
+		    ORDER BY post_no DESC
+		)
+	)WHERE RN BETWEEN #{beginList} AND #{endList}
   </select>
   
   <select id="selectDetail" parameterType="hashmap" resultMap="boardResultMap">
@@ -51,5 +53,15 @@
   	INSERT INTO board_post(post_no, user_no, category_no, post_title, post_content)
 	VALUES(BOARD_POST_SEQ.NEXTVAL, #{writer}, #{category_no}, #{title}, #{content})
   </insert>
+  
+  <delete id="deleteBoard" parameterType="hashmap">
+	DELETE FROM board_post
+	WHERE CATEGORY_NO = ${category_no}
+	AND POST_NO = #{post_no}
+  </delete>
+  
+  <update id="updateSet" parameterType="hashmap">
+  	UPDATE BOARD_POST SET POST_TITLE = #{title}, POST_CONTENT = #{content} WHERE POST_NO = #{post_no}
+  </update>
   
 </mapper>
