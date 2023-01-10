@@ -1,12 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/mvc
-        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-
+	<!-- security 
+	(1.) https://codevang.tistory.com/266
+	(2) https://developersp.tistory.com/6
+	(3) https://doing7.tistory.com/15
+	(4) https://admm.tistory.com/107
+	(5) https://doing7.tistory.com/15
+	
+	(6) https://sas-study.tistory.com/357?category=784778
+	-->
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/member/all" access="permitAll"/>
+		<security:intercept-url pattern="/post/getListcount" access="hasRole('ROLE_USER')"/>
+		<security:intercept-url pattern="/member/admin" access="hasRole('ROLE_ADMIN')"/>
+		
+		<!-- https://codevang.tistory.com/266
+			login-processing-url : 입력할 뷰페이지
+			(login-processing-url="/loginAsk" )
+			
+			서블릿에 넘겨줄 url
+			(login-page="/loginTest1")
+			
+			성공시
+			(default-target-url="/index")
+			
+			실패시
+			(authentication-failure-url="/index")
+		 -->
+		<security:form-login 
+			username-parameter="userId"  
+			password-parameter="userPw"
+		/>
+		<!-- invalidate-session : 세션삭제여부 
+			delete-cookies : 쿠키 삭제 여부
+			
+			성공시
+			logout-success-url="/index" 
+		-->
+		<security:logout 
+			logout-url="/member/loginFailure"
+			invalidate-session="true"
+			delete-cookies="true"
+			
+			
+		/>
+		
+		<!-- (403) 권한 없을 때 보낼 페이지 -->
+		<security:access-denied-handler error-page="/member/errertest"/>
+		
+	</security:http>
+	
+	<!-- DB 연동 설정 
+		cookie is
+		expiration time is per session
+	
+	-->
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="user" password="password" authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+	
 </beans>

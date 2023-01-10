@@ -15,6 +15,7 @@
 <context:component-scan base-package="com.wook.prj001.web.service"/>
 
 <context:component-scan base-package="com.wook.prj01.web.board.service"/>
+<context:component-scan base-package="com.wook.prj01.web.member.service"/>
 
 
 <!--     -->
