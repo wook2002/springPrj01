@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class User {
+public class Member {
 //	MEMBER_USER
 	private int user_no;
 	private String user_id;	

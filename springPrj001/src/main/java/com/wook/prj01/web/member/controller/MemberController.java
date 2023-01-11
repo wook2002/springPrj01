@@ -1,9 +1,10 @@
 package com.wook.prj01.web.member.controller;
 
-import java.net.http.HttpRequest;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,9 +25,16 @@ public class MemberController {
 	
 	// https://velog.io/@shinhyocheol/%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B8%B0%EB%8A%A51
 	@RequestMapping("all")
-	public int all() {
+	public int all(HttpServletResponse response) {
 		int test = service.login();
 		System.out.println("로그인테스트 all : " + test);
+		
+		//
+		
+		
+		
+		
+		
 		return 1;
 	}
 	

@@ -15,32 +15,56 @@
 	(5) https://doing7.tistory.com/15
 	
 	(6) https://sas-study.tistory.com/357?category=784778
+	
+	
+	
+	
+	http://www.incodom.kr/Spring_security_with_JWT
 	-->
+	
+	<!-- index.html과 resources 폴더의 하위 자원들은 사용자 인증/인가 필터를 적용하지 않도록 설정  
+	<security:http pattern="/" security="none"/>
+    <security:http pattern="/resources/**" security="none"/>-->
+<!-- 	<security:http pattern="/index.html" security="none"/> -->
+	
+	 <!-- 사용자 인증 필터 설정(/api/login 으로 요청에 대한 처리 설정) --> 
 	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/member/all" access="permitAll"/>
-		<security:intercept-url pattern="/post/getListcount" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/member/admin" access="hasRole('ROLE_ADMIN')"/>
+		
+		 <!-- <csrf disabled="true"/> -->
+			
+		<security:intercept-url
+			 pattern="/member/all" 
+			 access="permitAll"/>
+		<security:intercept-url 
+			pattern="/member/member" 
+			access="hasRole('ROLE_USER')"/>
+		<security:intercept-url 
+			pattern="/member/admin" 
+			access="hasRole('ROLE_ADMIN')"/>
+		
 		
 		<!-- https://codevang.tistory.com/266
 			login-processing-url : 입력할 뷰페이지
 			(login-processing-url="/loginAsk" )
-			
 			서블릿에 넘겨줄 url
 			(login-page="/loginTest1")
-			
 			성공시
 			(default-target-url="/index")
-			
 			실패시
 			(authentication-failure-url="/index")
-		 -->
+		 -->	
+		 
+		 <!-- index.html과 resources 폴더의 하위 자원들은 
+		 사용자 인증/인가 필터를 적용하지 않도록 설정 --> 
+		 	 
+		 
 		<security:form-login 
 			username-parameter="userId"  
 			password-parameter="userPw"
+			login-page="/member/all"
 		/>
 		<!-- invalidate-session : 세션삭제여부 
 			delete-cookies : 쿠키 삭제 여부
-			
 			성공시
 			logout-success-url="/index" 
 		-->
@@ -48,8 +72,6 @@
 			logout-url="/member/loginFailure"
 			invalidate-session="true"
 			delete-cookies="true"
-			
-			
 		/>
 		
 		<!-- (403) 권한 없을 때 보낼 페이지 -->
