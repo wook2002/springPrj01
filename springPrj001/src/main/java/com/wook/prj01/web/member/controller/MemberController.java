@@ -1,9 +1,6 @@
 package com.wook.prj01.web.member.controller;
 
-import java.util.Map;
-import java.util.UUID;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wook.prj01.web.member.service.MemberService;
+import com.wook.prj01.web.token2.JwtTokenProvider;
 
 @CrossOrigin(origins = "*")
 @RestController("memberController")
@@ -22,18 +20,17 @@ public class MemberController {
 	private MemberService service;
 
 	
-	
 	// https://velog.io/@shinhyocheol/%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B8%B0%EB%8A%A51
 	@RequestMapping("all")
 	public int all(HttpServletResponse response) {
-		int test = service.login();
-		System.out.println("로그인테스트 all : " + test);
+	
+		System.out.println(" all : ");
+		String id = "id1";
+		String pw = "1234";
 		
-		//
-		
-		
-		
-		
+		JwtTokenProvider jw = new JwtTokenProvider();
+		String result = jw.createJwt(id, pw);
+		System.out.println("result : " + result);
 		
 		return 1;
 	}
@@ -44,6 +41,7 @@ public class MemberController {
 		
 		int test = service.login();
 		System.out.println("로그인테스트 member : " + test);
+	
 		return 1;
 	}
 	

@@ -13,7 +13,7 @@
 		<param-value>
 		/WEB-INF/spring/servlet-context.xml
 		/WEB-INF/spring/service-context.xml
-		/WEB-INF/spring/security-context.xml
+		<!-- /WEB-INF/spring/security-context.xml -->
 	</param-value>
 		<!-- <param-value>classpath*:spring/context-*.xml</param-value> -->
 	</context-param>
@@ -37,7 +37,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 스프링 Security 필터 -->
+	<!-- 스프링 Security 필터 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -59,6 +59,7 @@
 			<param-value>/, /index, /error</param-value>
 		</init-param>
 	</filter>
+	-->
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -72,7 +73,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/servlet-context.xml
-					/WEB-INF/spring/security-context.xml
+					<!-- /WEB-INF/spring/security-context.xml -->
 		</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
