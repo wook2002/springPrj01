@@ -16,6 +16,10 @@
 		<typeAlias alias="board" type="com.wook.prj01.web.board.dto.Board"/>
 	</typeAliases>
 	
+	<mappers>
+		<mapper resource="/mapper/oracle/board/Board-sql.xml"/> 
+	</mappers>
+	
 <!--  environment id를 구분하여 연결할 DB를 여려개 구성할 수 도 있음 
 	<environments default="development">
 		<environment id="development">
@@ -30,9 +34,7 @@
 	</environments>
 -->
 	
-	<mappers>
-		<mapper resource="/mapper/oracle/board/Board-sql.xml"/> 
-	</mappers>
+	
 	
 	
 	

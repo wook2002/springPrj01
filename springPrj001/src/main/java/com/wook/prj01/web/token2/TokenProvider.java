@@ -15,7 +15,6 @@ import com.wook.prj01.web.member.dto.Member;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 
 // https://seeminglyjs.tistory.com/369
 // https://blog.naver.com/PostView.nhn?blogId=varkiry05&logNo=222296954508&categoryNo=107&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postView
@@ -25,9 +24,7 @@ import lombok.RequiredArgsConstructor;
 // @RequiredArgsConstructor : https://medium.com/webeveloper/requiredargsconstructor-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-dependency-injection-4f1b0ac33561
 
 @Component
-public class JwtTokenProvider {
-	
-	
+public class TokenProvider {
 	
 	@Value("${jwt.security.key}")
     private String secretKey;
@@ -35,7 +32,7 @@ public class JwtTokenProvider {
     private String jwtHeader;
     @Value("${jwt.token.prefix}")
     private String jwtTokenPrefix;
-	
+    
 	// 비밀키(HS256)
 	private SecretKey SecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 	
@@ -52,23 +49,32 @@ public class JwtTokenProvider {
 	private String data2 = "data2";
 	
 	
+//	@Autowired
+//    private RedisRepository redisRepository;
+	
+	 // AccessToken 생성
 	 public Token createAccessToken(Member member) {
 	        return createToken(member, accessValidTime, "access-token");
 	    }
-	 
+	 // RefreshToken 생성
 	 public Token createRefreshToken(Member member) {
 	        return createToken(member, refreshValidTime, "refresh-token");
 	    }
 	
+	 // response-Headers에 Authorization와 accessToken토큰이 들어감
 	 public void setHeaderAccessToken(HttpServletResponse response, String accessToken) {
 		 System.out.println("jwtHeader : " + jwtHeader); // Authorization
 		 System.out.println("secretKey : " + secretKey); // JWT
 		 System.out.println("jwtTokenPrefix : " + jwtTokenPrefix); // Bearer
-		 System.out.println("accessToken2 : " + accessToken);
+		 System.out.println("accessToken2 : " + accessToken); //
+		 
         response.setHeader(jwtHeader, accessToken); //이거왜붙임?(Authorization)
     }
 	 
-	 //
+	 // redis서버 
+	 
+	 
+	 
 	public Token createToken(
 		Member member, long validTime, String setSubject) {
 		
@@ -92,7 +98,6 @@ public class JwtTokenProvider {
 			.expiredTime(validTime)
 			.build();
 	}
-	
 	
 	public Map<String, Object> headers(String typ, String alg){
 		Map<String, Object> headers = new HashMap<>();

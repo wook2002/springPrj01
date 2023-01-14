@@ -10,27 +10,28 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- test -->
-	<!-- <context:annotation-config/>--> 
-	<context:component-scan base-package="com.wook.prj001.web.controller"/> 
-	
-	<!-- 위에꺼 아래로 옮길거임.(트리형식->도메인형식) -->
-	<context:component-scan base-package="com.wook.prj01.web.board.controller"/>
-	<context:component-scan base-package="com.wook.prj01.web.member.controller"/>
-	<context:component-scan base-package="com.wook.prj01.web.controller"/>
-	
-	<context:component-scan base-package="com.wook.prj01.web.token2"/>
+	<!-- <context:annotation-config/> -->
+	<context:component-scan
+		base-package="com.wook.prj001.web.controller" />
 
-<!-- viewResolver -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    	<property name="prefix" value="/WEB-INF/views/"/>
-    	<property name="suffix" value=".jsp"/>
-    </bean>
-	
-<!-- 정적파일 사용 -->
-    <mvc:resources location="/static/" mapping="/**"/>
-    
-<!-- @RestController ~ @ResponseBody  -->
-<!-- ==> String 처리할 때, 한글처리. -->
+	<!-- 위에꺼 아래로 옮길거임.(트리형식->도메인형식) -->
+	<context:component-scan base-package="com.wook.prj01.web.board.controller" />
+	<context:component-scan base-package="com.wook.prj01.web.member.controller" />
+	<context:component-scan base-package="com.wook.prj01.web.controller" />
+	<context:component-scan base-package="com.wook.prj01.web.token2" />
+
+	<!-- viewResolver -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 정적파일 사용 -->
+	<mvc:resources location="/static/" mapping="/**" />
+
+	<!-- @RestController ~ @ResponseBody -->
+	<!-- ==> String 처리할 때, 한글처리. -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
@@ -43,30 +44,32 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	
-	
+
+
 	<!-- properties -->
-	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:/config.properties"/>
-        <property name="fileEncoding" value="UTF-8" />
-    </bean>
-    
-    <!-- redis 이거 안쓰면 안됨?
-    java.lang.IllegalStateException: Failed to introspect Class [org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration] from ClassLoader [ParallelWebappClassLoader-->
-    <!-- <bean id="jedisConnectionFactory"
-		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:usePool="true"  p:hostName="192.168.***.***" p:port="6379" />
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connectionFactory-ref="jedisConnectionFactory" />
- -->
- <!--  
- 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
- 	<bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
- 		p:port="6379" p:hostName="localhost"/>-->	
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="classpath:/config.properties" />
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
 	
-	
-	<!-- mybatis 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	  <property name="dataSource" ref="dataSource" />
-	</bean>-->
-	
-	
+
+	<!-- redis 이거 안쓰면 안됨? java.lang.IllegalStateException: Failed to introspect 
+		Class [org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration] 
+		from ClassLoader [ParallelWebappClassLoader -->
+	<!-- <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+		p:usePool="true" p:hostName="192.168.***.***" p:port="6379" /> <bean id="redisTemplate" 
+		class="org.springframework.data.redis.core.RedisTemplate" p:connectionFactory-ref="jedisConnectionFactory" 
+		/> -->
+	<!-- <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/> 
+		<bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+		p:port="6379" p:hostName="localhost"/> -->
+
+
+	<!-- mybatis <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> </bean> -->
+
+
 </beans>
