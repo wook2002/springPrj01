@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wook.prj01.web.member.dto.Member;
 import com.wook.prj01.web.member.service.MemberService;
-import com.wook.prj01.web.token2.RedisRepository;
 import com.wook.prj01.web.token2.Token;
 import com.wook.prj01.web.token2.TokenProvider;
 
@@ -44,18 +43,16 @@ public class MemberController {
 		member.setUser_id(id);
 		member.setPassword(pw);
 		
+		// redis에는 refreshToken 저장
+//		redisRepository.save(refreshToken);
+		
+//		사용자 확인 후 토큰 발급
 		Token accessToken = tokenProvider.createAccessToken(member);
 		Token refreshToken = tokenProvider.createRefreshToken(member);
 		
 		tokenProvider.setHeaderAccessToken(response, accessToken.getValue());
-		
-		// redis에는 refreshToken 저장
-//		redisRepository.save(refreshToken);
-		
-		
 		System.out.println("response : " + response);
 		System.out.println("response" + response.getHeaderNames());
-		
 		System.out.println("accessToken : " + accessToken);
 		System.out.println("refreshToken : " + refreshToken);
 		
