@@ -4,6 +4,7 @@ package com.wook.prj01.web.member.controller;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class MemberController {
 	// (redis : 키-값 인메모리 DB 캐시같은 느낌(메모리에서 데이터 처리해서 빠름)
 	// 캐시데이터, 토큰저장 -> 이래서 있는구거
 	@RequestMapping("all")
-	public int all(HttpServletResponse response) {
+	public String all(HttpServletResponse response) {
 	
 		// https://dev-yujji.tistory.com/63
 		System.out.println(" all : ");
@@ -55,9 +56,21 @@ public class MemberController {
 		System.out.println("response" + response.getHeaderNames());
 		System.out.println("accessToken : " + accessToken);
 		System.out.println("refreshToken : " + refreshToken);
+		response.setHeader("Set-Cookie", refreshToken.toString());
+		System.out.println("refreshToken.toString() : " + refreshToken.toString());
 		
 		
-		return 1;
+		 ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken.getValue())
+	                .maxAge(7 * 24 * 60 * 60)
+	                .path("/")
+	                .secure(true)
+	                .sameSite("None")
+	                .httpOnly(true)
+	                .build();
+	        response.setHeader("Set-Cookie", cookie.toString());
+		
+		
+		return "1" ;
 	}
 	
 	

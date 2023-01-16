@@ -8,6 +8,9 @@ import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.wook.prj01.web.member.dto.Member;
@@ -22,6 +25,11 @@ import io.jsonwebtoken.security.Keys;
 // https://dev-yujji.tistory.com/63
 
 // @RequiredArgsConstructor : https://medium.com/webeveloper/requiredargsconstructor-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-dependency-injection-4f1b0ac33561
+
+
+// https://velog.io/@solchan/%EB%B0%B1%EC%97%85-Redis%EB%A5%BC-%ED%86%B5%ED%95%9C-JWT-Refresh-Token-%EA%B4%80%EB%A6%AC
+// https://gksdudrb922.tistory.com/217
+// https://blog.naver.com/PostView.naver?blogId=jinwoo6612&logNo=222462211251&parentCategoryNo=&categoryNo=32&viewDate=&isShowPopularPosts=true&from=search
 
 @Component
 public class TokenProvider {
@@ -71,7 +79,9 @@ public class TokenProvider {
         response.setHeader(jwtHeader, accessToken); //이거왜붙임?(Authorization)
     }
 	 
-	 // redis서버 
+	 // JWT 토큰에서 인증 정보 조회
+	    public void getAuthentication(String token) {
+	    }
 	 
 	 
 	 
@@ -81,6 +91,7 @@ public class TokenProvider {
 		 Long now = System.currentTimeMillis();
 		 Map<String, Object> headers = headers(typ, alg);
 		 Map<String, Object> payloads = payloads(data1, data2);
+		 
 		 
 		 
 		String jwtToken = Jwts.builder()

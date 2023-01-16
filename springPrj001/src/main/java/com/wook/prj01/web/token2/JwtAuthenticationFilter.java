@@ -16,6 +16,7 @@ import com.wook.prj01.web.token.JwtTokenProvider;
 
 // extends Filter
 // Spring의 설정 정보를 가져올 수 있게 확장이라함
+// spring-session? SessionFilter(https://jerry92k.tistory.com/25)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtTokenProvider jwtTokenProvider = null;
@@ -25,7 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		@Override
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 				throws ServletException, IOException {
-			System.out.println("필터체크");
+			System.out.println("----필터s----");
 			
 			String jwtToken = parseJwt(request);
 			System.out.println("jwtToken : " + jwtToken);
@@ -37,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				System.out.println(" false");
 			}
 			
+			System.out.println("----필터e----");
 			filterChain.doFilter(request, response);
 		}
 		

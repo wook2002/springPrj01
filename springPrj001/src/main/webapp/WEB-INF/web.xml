@@ -13,7 +13,7 @@
 		<param-value>
 		/WEB-INF/spring/servlet-context.xml
 		/WEB-INF/spring/service-context.xml
-		<!-- /WEB-INF/spring/redis-context.xml -->
+		/WEB-INF/spring/redis-context.xml
 		<!-- /WEB-INF/spring/security-context.xml -->
 	</param-value>
 		<!-- <param-value>classpath*:spring/context-*.xml</param-value> -->
@@ -78,7 +78,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/servlet-context.xml
-			
+			 /WEB-INF/spring/redis-context.xml 
 					<!-- /WEB-INF/spring/security-context.xml -->
 		</param-value>
 		</init-param>
