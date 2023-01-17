@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.wook.prj01.web.member.dto.Member;
+import com.wook.prj01.web.redis.RedisServiceImpl;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,6 +35,9 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class TokenProvider {
+	
+	@Autowired
+	private RedisServiceImpl redisService;
 	
 	@Value("${jwt.security.key}")
     private String secretKey;
@@ -66,7 +71,9 @@ public class TokenProvider {
 	    }
 	 // RefreshToken 생성
 	 public Token createRefreshToken(Member member) {
-	        return createToken(member, refreshValidTime, "refresh-token");
+		 Token refreshToken = createToken(member, refreshValidTime, "refresh-token");
+		 redisService.setToken(refreshToken);
+	        return refreshToken;
 	    }
 	
 	 // response-Headers에 Authorization와 accessToken토큰이 들어감
@@ -92,8 +99,6 @@ public class TokenProvider {
 		 Map<String, Object> headers = headers(typ, alg);
 		 Map<String, Object> payloads = payloads(data1, data2);
 		 
-		 
-		 
 		String jwtToken = Jwts.builder()
 	    		.setSubject(setSubject)
 				.setHeader(headers)
@@ -108,6 +113,11 @@ public class TokenProvider {
 			.value(jwtToken)
 			.expiredTime(validTime)
 			.build();
+	}
+	
+	// setRedisToken(refreshToken)
+	public void setToken(Token refreshToken) {
+		redisService.setToken(refreshToken);
 	}
 	
 	public Map<String, Object> headers(String typ, String alg){
