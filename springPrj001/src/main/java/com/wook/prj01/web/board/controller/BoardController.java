@@ -1,6 +1,8 @@
 package com.wook.prj01.web.board.controller;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +62,8 @@ public class BoardController {
 		map = service.getPageItem(map);
 		list = service.getListPage(map);
 		map.put("list", list);
+		System.out.println(map);
+		
 		return map;
 	}
 

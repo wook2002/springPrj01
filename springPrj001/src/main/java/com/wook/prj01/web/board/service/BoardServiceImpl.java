@@ -14,9 +14,6 @@ import com.wook.prj01.web.board.dto.Page;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 
-//	https://mysterlee.tistory.com/49 (@configuration으로 하는 방법)
-
-	
 //	private SqlSession sqlSession;
 	@Autowired
 	private SqlSessionTemplate session;
