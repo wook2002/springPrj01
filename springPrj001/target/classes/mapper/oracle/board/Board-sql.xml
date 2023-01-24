@@ -30,8 +30,7 @@
   <select id="selectListPage" parameterType="hashmap" resultMap="boardResultMap">
   	SELECT *
   	FROM(
-	  	SELECT ROWNUM AS "RN", post_no,post_title, post_content
-	  		, TO_CHAR(reg_date, '""YYYY"년 "MM" "DD"일"') AS "reg_date", recommend, lookup
+	  	SELECT ROWNUM AS "RN", post_no,post_title, post_content, reg_date, recommend, lookup
 		            ,category_name, user_id, category_no
 		FROM(
 		    SELECT *
